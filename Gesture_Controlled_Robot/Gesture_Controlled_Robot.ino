@@ -1,19 +1,15 @@
 /*
-  Author: Vikrant Gupta
+  Author: Vikrant_Gupta
   Email: vikrantgupta95@gmail.com
   LinkedIn: https://www.linkedin.com/in/vikrantgupta95/
   Instagram: https://www.instagram.com/crazyvikku/
-  GitHub: https://github.com/vikrantgupta95/
+  GitHub: https://github.com/vikrantgupta95
 
-  Copyright: (c) Vikrant Gupta
-
-  Description: This Arduino code implements a gesture-controlled robot using the ADXL3 accelerometer. 
-  It defines pins for the left and right motors, as well as for the x and y axes of the accelerometer. 
-  The setup function initializes serial communication and sets the motor driver pins as outputs. 
-  The loop function continuously reads the accelerometer values and controls the robot's movement 
-  based on predefined conditions for forward, backward, sharp left, and sharp right movements.
-
-  Last updated: [26-03-2024]
+  Description: This code implements a gesture-controlled robot using an ADXL3 
+  accelerometer. The robot's movement is controlled based on the readings from 
+  the accelerometer, with specific conditions defined for each direction 
+  (forward, backward, left, right, and stop). The code also includes information
+   about the author and any relevant copyright details.
 */
 
 // declare pins
@@ -21,12 +17,10 @@ int lm1 = 2;
 int lm2 = 3;
 int rm1 = 4;
 int rm2 = 5;
-int xpin = A0;                  // x-axis of the accelerometer
-int ypin = A1;                  // y-axis
+int xpin = A0; // x-axis of the accelerometer
+int ypin = A1; // y-axis
 
-void setup() 
-{
-  // put your setup code here, to run once:
+void setup() {
   Serial.begin(9600);
   // define whether pins are used as input or output
   pinMode(lm1, OUTPUT);
@@ -40,9 +34,7 @@ void setup()
   digitalWrite(12, HIGH);
 }
 
-void loop() 
-{
-  // put your main code here, to run repeatedly:
+void loop() {
   if (400 > analogRead(xpin) && analogRead(xpin) > 330 && 400 > analogRead(ypin) && analogRead(ypin) > 330) // condition to stop the bot..
   {
     digitalWrite(lm1, LOW);
@@ -51,7 +43,7 @@ void loop()
     digitalWrite(rm2, LOW);
   }
 
-  if (analogRead(xpin) < 330 && 400 > analogRead(ypin) && analogRead(ypin) > 330)  // forward..
+  if (analogRead(xpin) < 330 && 400 > analogRead(ypin) && analogRead(ypin) > 330) // forward..
   {
     digitalWrite(lm1, HIGH);
     digitalWrite(lm2, LOW);
@@ -59,7 +51,7 @@ void loop()
     digitalWrite(rm2, LOW);
   }
 
-  if (analogRead(xpin) > 400 && 400 > analogRead(ypin) && analogRead(ypin) > 330)  // backward...
+  if (analogRead(xpin) > 400 && 400 > analogRead(ypin) && analogRead(ypin) > 330) // backward...
   {
     digitalWrite(lm1, LOW);
     digitalWrite(lm2, HIGH);
@@ -67,7 +59,7 @@ void loop()
     digitalWrite(rm2, HIGH);
   }
 
-  if (400 > analogRead(xpin) && analogRead(xpin) > 330 && analogRead(ypin) < 330)  // sharp left...
+  if (400 > analogRead(xpin) && analogRead(xpin) > 330 && analogRead(ypin) < 330) // sharp left...
   {
     digitalWrite(lm1, LOW);
     digitalWrite(lm2, HIGH);
@@ -75,11 +67,20 @@ void loop()
     digitalWrite(rm2, LOW);
   }
 
-  if (400 > analogRead(xpin) && analogRead(xpin) > 330 && 400 < analogRead(ypin))  // sharp right
+  if (400 > analogRead(xpin) && analogRead(xpin) > 330 && 400 < analogRead(ypin)) // sharp right
   {
     digitalWrite(lm1, HIGH);
     digitalWrite(lm2, LOW);
     digitalWrite(rm1, LOW);
     digitalWrite(rm2, HIGH);
   }
+
+  // testing phase to check adlx module
+  //  Serial.print(analogRead(xpin));
+  //  // print a tab between values:
+  //  Serial.print("\t");
+  //  Serial.print(analogRead(ypin));
+  //  // print a tab between values:
+  //  Serial.println("\t");
+  //  delay(100);
 }
